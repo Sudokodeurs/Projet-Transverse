@@ -1,6 +1,6 @@
 #define VITESSE_X 70  // Puissance du moteur pour le scan (avant pour le bras)
-#define VITESSE_Y 70  // Puissance du moteur pour le scan (arrière pour les roues)
-#define VITESSE_ECRITURE_X 20 // Même chose pour l'écriture
+#define VITESSE_Y 70  // Puissance du moteur pour le scan (arriÃ¨re pour les roues)
+#define VITESSE_ECRITURE_X 20 // MÃªme chose pour l'Ã©criture
 #define VITESSE_ECRITURE_Y 30
 
 #define NORD       1 // Variables pour la reconnaissance des chiffres
@@ -23,7 +23,7 @@
 #define AVANT 20
 #define MAX_LEVEL  65
 
-#define UN      1 // On définit des variables pour l'écriture
+#define UN      1 // On dÃ©finit des variables pour l'Ã©criture
 #define DEUX    2
 #define TROIS   4
 #define QUATRE  8
@@ -60,7 +60,7 @@ int compteur[512];
 
 //calibrage du robot en fonction de la grille du sudoku a scanner
 
-// get_decalage permet de savoir si le robot est mal positionner par raport a la grille en fonction de l'intensité de la lumiere
+// get_decalage permet de savoir si le robot est mal positionner par raport a la grille en fonction de l'intensitÃ© de la lumiere
 int get_decalage(int direction)
 {
     // initialisation des variables
@@ -71,8 +71,8 @@ int get_decalage(int direction)
     {
         byte lumiere;
         RotateMotorEx(OUT_B, VITESSE_X, direction, 0, false, false);
-        lumiere = Sensor(IN_2); // capteur de lumiere dans l'entrée 2 du boitier nxt
-        scanbuff[i] = lumiere; // on insere dans le tableau scanbuff[i] l'intensité de la lumiere
+        lumiere = Sensor(IN_2); // capteur de lumiere dans l'entrÃ©e 2 du boitier nxt
+        scanbuff[i] = lumiere; // on insere dans le tableau scanbuff[i] l'intensitÃ© de la lumiere
     }
     Off(OUT_B); // on arrete le moteur
     for(int i = 0; i < CALIBRER_LARGEUR; i++) //on parcour le tableau
@@ -88,7 +88,7 @@ int get_decalage(int direction)
 }
 
 // On appelle la fonction precedente et on calibre le robot grace a ses moteur C et B
-void calibrer() // moteur A contrôle la gauche et motor B la droite du robot
+void calibrer() // moteur A contrÃ´le la gauche et motor B la droite du robot
 {
     RotateMotor(OUT_B, VITESSE_X, -1 * CALIBRER_LARGEUR / 2);
     LR_decalage = get_decalage(1);
@@ -108,7 +108,7 @@ void initialisation()
     {
         RotateMotorEx(OUT_A, 29, -10, 0, false, false);
         lumiere = Sensor(IN_2);
-        if(lumiere > lumiere_max) // reglage de l'intensité max de la lumiere
+        if(lumiere > lumiere_max) // reglage de l'intensitÃ© max de la lumiere
             lumiere_max = lumiere;
     }
     while(lumiere > (lumiere_max - 7))
@@ -125,7 +125,7 @@ void cellule_sonde(int cellule, int centre)
     int droite = gauche + 100;
     if (droite > LARGEUR_PUZZLE)
     {
-        droite = LARGEUR_PUZZLE; // Mise en mémoire des bord de la grille
+        droite = LARGEUR_PUZZLE; // Mise en mÃ©moire des bord de la grille
         gauche = droite - 100;
     }
     int valeur_max = scanbuffer[gauche];
@@ -200,7 +200,7 @@ void recherche_cellules_non_vides()
         {
             byte lumiere;
             RotateMotorEx(OUT_B, VITESSE_X, -1, 0, false, false);
-            lumiere = Sensor(IN_2); // Recupération valeur capteur -> peu avoir probleme si mauvaise condition lumineuse
+            lumiere = Sensor(IN_2); // RecupÃ©ration valeur capteur -> peu avoir probleme si mauvaise condition lumineuse
             scanbuffer[x] = lumiere;
         }
         Off(OUT_B);
@@ -215,7 +215,7 @@ void recherche_cellules_non_vides()
         }
     }
     int compteur = 0;
-    for(int i = 0; i < 9 * 9; i++) // Compte nombre element trouvé
+    for(int i = 0; i < 9 * 9; i++) // Compte nombre element trouvÃ©
         if(sonde[i])
             compteur++;
 }
@@ -223,7 +223,7 @@ void recherche_cellules_non_vides()
 void scan_ligne(int r,int direction)
 {
     int b_decalage = r*SCAN_X; // Scan ligne par ligne
-    if(direction == 1) // Boolean, si direction est même
+    if(direction == 1) // Boolean, si direction est mÃªme
     {
         for(int x = 0; x < AVANT; x += 1) // Decalement grille
             RotateMotorEx(OUT_B, VITESSE_X, STEP_X, 0, false, false);
@@ -277,7 +277,7 @@ void capteur_deplacement(int r, int c, int decalageX, int decalageY, bool scanCe
     int oldMotorA = MotorRotationCount(OUT_A); //nombre de rotation du moteur A
     int oldMotorB = MotorRotationCount(OUT_B); //nombre de rotation du moteur B
 
-    ResetTachoCount(OUT_AB); //Réinitialisation du nombre de tachymètres et la limite du but pour les sorties spécifiées.
+    ResetTachoCount(OUT_AB); //RÃ©initialisation du nombre de tachymÃ¨tres et la limite du but pour les sorties spÃ©cifiÃ©es.
     int y = (r - 4) * TAILLE_CELLULE;
 
     // on ajoute le decalage X ou Y en fonction du moteur correspondant
@@ -329,13 +329,13 @@ void  methode_seuil()
     for(int i = 1; i < SCAN_X * SCAN_Y; i++)
         if(b[i] < min)
             min = b[i];
-    for(byte t = min + 2; compteur_blanc >= compteur_noir; t++) // Case colorier en noir -> chiffre detecté
+    for(byte t = min + 2; compteur_blanc >= compteur_noir; t++) // Case colorier en noir -> chiffre detectÃ©
     {
         long somme_cpt_blanc = 0;
         long somme_cpt_noir = 0;
         compteur_blanc = 0;
         compteur_noir = 0;
-        for(int i = 0; i < SCAN_X * SCAN_Y; i++) // Parcours de toute la grille scanné
+        for(int i = 0; i < SCAN_X * SCAN_Y; i++) // Parcours de toute la grille scannÃ©
         {
             byte value = b[i];
             if(value > t)
@@ -371,7 +371,7 @@ void  methode_seuil()
     {
         if(b[i] < seuil)
         {
-            //Recherche si pic (les trous dans 6 8 9 peuvent ne pas être reconnus)
+            //Recherche si pic (les trous dans 6 8 9 peuvent ne pas Ãªtre reconnus)
             for(int j = i - 1; j > 0; j--)
                 if(b[j] > b[i])
                     break;
@@ -531,7 +531,7 @@ void reconnaissance(int r, int c)
             }
         }
     int chiffre;
-    //reconnaissance des chiffre grace au reglage tips effectué precedement
+    //reconnaissance des chiffre grace au reglage tips effectuÃ© precedement
     if(largeur < 6)
 
         chiffre = 1;
@@ -836,7 +836,7 @@ void stylo_haut()
     RotateMotor(OUT_C,19,-15);
 }
 
-// fonction pour déplacer le bras mecanique tenant le stylo
+// fonction pour dÃ©placer le bras mecanique tenant le stylo
 void stylo_move(int r, int c, int decalageX, int decalageY)
 {
     int newMotorA;
@@ -860,7 +860,7 @@ void stylo_move(int r, int c, int decalageX, int decalageY)
         RotateMotorExPID(OUT_A, 49, DiffMotorA, 0, false, true, 49, 40, 90);
 }
 
-// déplacement du bras pour ecrire les chiffre, chaque lettre correspondant a un mouvement 
+// dÃ©placement du bras pour ecrire les chiffre, chaque lettre correspondant a un mouvement 
 void ecrire_chiffre(int chiffre, int ligne, int colonne)
 {
     int xStep = 5;
@@ -942,7 +942,7 @@ void sudoku_afficher()
                 ecrire_chiffre(sudoku[r * 9 + c], r, c);
 }
 
-// fonction main, où on appel les fonctions principale de notre programme
+// fonction main, oÃ¹ on appel les fonctions principale de notre programme
 task main()
 {
     initialisation();
